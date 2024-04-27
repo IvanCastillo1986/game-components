@@ -1,33 +1,62 @@
-console.log('script is working')
-
 const body = document.querySelector('body')
 const viewport = document.getElementById('viewport')
-const sprite = document.querySelector('.sprite')
-console.log(viewport)
+const greenDot = document.querySelector('.green-dot')
+const backgroundImg = document.getElementById('background-img')
 
-let pressedKey = ''
-const position = {
+
+
+// BACKGROUND
+const backgroundPos = {
     x: 0,
     y: 0
 }
 
-const move = (pos) => {
-    
+const moveBackground = (img, pressedKey) => {
+
+    if (pressedKey === 'd') {
+        backgroundPos.x += 20
+        img.style.left = backgroundPos.x + 'px'
+    } else if (pressedKey === 'a') {
+        backgroundPos.x -= 20
+        img.style.left = backgroundPos.x + 'px'
+    } else if (pressedKey === 's') {
+        backgroundPos.y += 20
+        img.style.top = backgroundPos.y + 'px'
+    } else if (pressedKey === 'w') {
+        backgroundPos.y -= 20
+        img.style.top = backgroundPos.y + 'px'
+    }
 }
 
-body.addEventListener('keydown', (e) => {
-    pressedKey = e.key
-    console.log('pressedKey:', pressedKey)
+
+// SPRITE
+const spritePos = {
+    x: 0,
+    y: 0
+}
+
+const moveSprite = (sprite, pressedKey) => {
 
     if (pressedKey === 'ArrowRight') {
-        position.x += 20
-        console.log('position', position)
-        console.log('pressed right', sprite.style.left) 
+        spritePos.x += 20
+        sprite.style.left = spritePos.x + 'px'
     } else if (pressedKey === 'ArrowLeft') {
-        position.x -= 20
+        spritePos.x -= 20
+        sprite.style.left = spritePos.x + 'px'
     } else if (pressedKey === 'ArrowDown') {
-        position.y += 20
-    } else {
-        position.y -= 20
+        spritePos.y += 20
+        sprite.style.top = spritePos.y + 'px'
+    } else if (pressedKey === 'ArrowUp') {
+        spritePos.y -= 20
+        sprite.style.top = spritePos.y + 'px'
     }
+}
+
+let key = ''
+
+body.addEventListener('keydown', (e) => {
+    key = e.key
+
+    moveBackground(backgroundImg, key)
+    moveSprite(greenDot, key)
 })
