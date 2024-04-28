@@ -11,9 +11,10 @@ const backgroundPos = {
     y: 0
 }
 
-
 // SPRITE
 const spritePos = {
+    x: (viewport.width / 2) - (greenDot.width / 2), // viewport width / 2 - sprite width / 2
+    y: (viewport.height / 2) - (greenDot.height / 2), // viewport height / 2 - sprite height / 2
 }
 
 const moveSprite = (sprite, pressedKey) => {

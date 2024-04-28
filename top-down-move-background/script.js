@@ -4,43 +4,51 @@ const greenDot = document.querySelector('.green-dot')
 const backgroundImg = document.getElementById('background-img')
 
 
-
-// BACKGROUND
-const backgroundPos = {
-    x: backgroundImg.offsetLeft,
-    y: backgroundImg.offsetTop
-}
-
-const moveBackground = (img, pressedKey) => {
-    if (pressedKey === 'd') {
-        backgroundPos.x += 20
-        img.style.left = backgroundPos.x + 'px'
-    } else if (pressedKey === 'a') {
-        backgroundPos.x -= 20
-        img.style.left = backgroundPos.x + 'px'
-    } else if (pressedKey === 's') {
-        backgroundPos.y += 20
-        img.style.top = backgroundPos.y + 'px'
-    } else if (pressedKey === 'w') {
-        backgroundPos.y -= 20
-        img.style.top = backgroundPos.y + 'px'
-    }
-}
-
-
-
-// SPRITE
-// const spritePos = {
-//     x: (viewport.width / 2) - (greenDot.width / 2), // viewport width / 2 - sprite width / 2
-//     y: (viewport.height / 2) - (greenDot.height / 2), // viewport height / 2 - sprite height / 2
-// }
-
-// --------------------------------------------
-
 let key = ''
 
-body.addEventListener('keydown', (e) => {
+
+const moveElement = (element, pressedKey) => {
+    // sets the distance in pixels that will be moved by key press
+    const distance = 20
+
+    const currentPosition = element.getBoundingClientRect()
+    let left = currentPosition.left
+    let top = currentPosition.top
+
+    console.log(currentPosition)
+    // console.log([left, top])
+
+    if (pressedKey === 'd') {
+        left += distance
+    } else if (pressedKey === 'a') {
+        left -= distance
+    } else if (pressedKey === 's') {
+        top += distance
+    } else if (pressedKey === 'w') {
+        top -= distance
+    }
+
+    element.style.left = left + 'px'
+    element.style.top = top + 'px'
+
+    return {left, top}
+}
+
+
+
+document.addEventListener('keydown', (e) => {
+    // on key press, calculate new coordinates based on which key was pressed
     key = e.key
 
-    moveBackground(backgroundImg, key)
+    const backgroundPosition = moveElement(backgroundImg, key)
+
+    console.log(backgroundPosition)
 })
+
+/*
+on key press, calculate new coordinates based on which key was pressed
+
+using those coordinates, update the coordinates in the element's position object
+
+using the new object's position, calculate if the objects are touching
+*/
