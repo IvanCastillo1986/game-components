@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    overflow: hidden;
+    position: relative;
 }
 
 h1 {
@@ -10,19 +10,22 @@ h1 {
 
 #background-img {
     position: absolute;
-    width: 100%;
+    width: 1000px;
+    z-index: -1;
+    /* top: 0; */
+    /* left: 0; */
 }
 
 
 #viewport {
-    position: absolute;
-    width: 50%;
+    position: static;
+    width: 500px;
     height: 300px;
-    border: 1px solid black;
+    border: 5px solid rgb(255, 0, 0);
     box-sizing: border-box;
-    background: linear-gradient(#e66465, #9198e5);
-    left: 25%;
-    bottom: 25%;
+    background: rgba(0, 0, 0, 0);
+    margin: auto;
+    overflow: hidden;
 }
 .green-dot {
     width: 20px;

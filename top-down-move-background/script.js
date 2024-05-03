@@ -4,18 +4,29 @@ const greenDot = document.querySelector('.green-dot')
 const backgroundImg = document.getElementById('background-img')
 
 
-let key = ''
 
-
+// moveElement(backgroundImg, 20, key, viewport)
 const moveElement = (element, distance, pressedKey, obstacle) => {
-    // sets the distance in pixels that will be moved by key press
-    // const distance = 20
 
-    const currentPosition = element.getBoundingClientRect()
-    let left = currentPosition.left
-    let right = currentPosition.right
-    let top = currentPosition.top
-    let bottom = currentPosition.bottom
+    let left = element.offsetLeft
+    let right = left + element.offsetWidth
+    let top = element.offsetTop
+    let bottom = top + element.offsetHeight
+    // console.log('element.offsetParent:', element.offsetParent)
+
+    // currentPosition and element.style.left are different
+    // let obstacleLeft = obstacle.offsetLeft
+    // let obstacleRight = obstacleLeft + obstacle.offsetWidth
+    // let obstacleTop = obstacle.offsetTop
+    // let obstacleBottom = obstacleTop + obstacle.offsetHeight
+    const obstaclePos = obstacle.getBoundingClientRect()
+    let obstacleLeft = obstaclePos.left
+    let obstacleRight = obstaclePos.right
+    let obstacleTop = obstaclePos.top
+    let obstacleBottom = obstaclePos.bottom
+    console.log(obstaclePos)
+    
+
     
     if (pressedKey === 'd') {
         left += distance
@@ -23,23 +34,23 @@ const moveElement = (element, distance, pressedKey, obstacle) => {
     } else if (pressedKey === 'a') {
         left -= distance
         right -= distance
-    } else if (pressedKey === 's') {
-        top += distance
-        bottom += distance
     } else if (pressedKey === 'w') {
         top -= distance
         bottom -= distance
+    } else if (pressedKey === 's') {
+        top += distance
+        bottom += distance
     }
-    const obstaclePosition = obstacle.getBoundingClientRect()
     
     // check if it's colliding
     if (
-        left > obstaclePosition.left || // 200, 230  // 220, 230
-        right < obstaclePosition.right || // 701, 690  // 681, 690
-        top > obstaclePosition.top ||
-        bottom < obstaclePosition.bottom
+        left > obstacleLeft || // 200, 230  // 220, 230
+        right < obstacleRight || // 701, 690  // 681, 690
+        top > obstacleTop ||
+        bottom < obstacleBottom
     ) {
-        console.log('elements touching now:', [currentPosition, obstaclePosition])
+        // console.log('elements touching now:', [currentPosition, obstaclePosition])
+        console.log('elements touching now')
         return
     }
     
@@ -47,21 +58,15 @@ const moveElement = (element, distance, pressedKey, obstacle) => {
     element.style.left = left + 'px'
     element.style.top = top + 'px'
 
-    return { currentPosition, obstaclePosition }
+    // return { currentPosition }
 }
+
 
 
 document.addEventListener('keydown', (e) => {
     // on key press, calculate new coordinates based on which key was pressed
-    key = e.key
+    const key = e.key
 
     const positions = moveElement(backgroundImg, 20, key, viewport)
-
-    console.log(positions)
+    // console.log(positions)
 })
-
-/*
-ToDo
-Find out why it gets stuck when items collide on right side
-
-*/
